@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TIKC Traffic Report — November 3–9, 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#eef6ff;
+  --surface:rgba(255,255,255,0.74);
+  --surface-warm:rgba(238,246,255,0.72);
+  --fg:#102033; --fg-2:#34465f; --muted:#60708a; --meta:#4f8cff;
+  --border:rgba(255,255,255,0.64); --border-soft:rgba(255,255,255,0.38);
+  --accent:#4f8cff; --accent-on:#ffffff;
+  --success:#22c55e; --warn:#f59e0b; --danger:#ef4444;
+  --font-display:Inter, system-ui, sans-serif;
+  --font-body:Inter, system-ui, sans-serif;
+  --font-mono:"SF Mono", ui-monospace, Menlo, monospace;
+  --text-xs:12px; --text-sm:14px; --text-base:16px; --text-lg:18px;
+  --text-xl:24px; --text-2xl:36px; --text-3xl:54px; --text-4xl:76px;
+  --leading-body:1.55; --leading-tight:1.04; --tracking-display:-0.025em;
+  --space-1:4px; --space-2:8px; --space-3:12px; --space-4:16px;
+  --space-5:20px; --space-6:24px; --space-8:32px; --space-12:48px;
+  --section-y-tablet:72px; --section-y-phone:52px;
+  --radius-sm:16px; --radius-md:24px; --radius-lg:36px; --radius-pill:9999px;
+  --elev-raised:0 24px 80px rgba(79,140,255,0.18);
+  --focus-ring:0 0 0 4px rgba(79,140,255,0.28);
+  --motion-fast:180ms; --motion-base:280ms;
+  --ease-standard:cubic-bezier(0.22,1,0.36,1);
+  --container-max:1180px;
+  --container-gutter-desktop:36px; --container-gutter-tablet:24px; --container-gutter-phone:16px;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:var(--font-body);font-size:var(--text-base);line-height:var(--leading-body);-webkit-font-smoothing:antialiased;position:relative;overflow-x:hidden}
+.field{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+.orb{position:absolute;border-radius:50%;filter:blur(70px);opacity:.62}
+.orb-a{width:640px;height:640px;top:-190px;left:-140px;background:radial-gradient(circle at 30% 30%,#ffc98a,#f59e0b 55%,rgba(245,158,11,0) 72%);opacity:.4}
+.orb-b{width:560px;height:560px;top:22%;right:-190px;background:radial-gradient(circle at 50% 50%,#b6d4ff,#5fa8ff 50%,rgba(95,168,255,0) 72%)}
+.orb-c{width:720px;height:720px;bottom:-280px;left:26%;background:radial-gradient(circle at 50% 50%,#c9e0ff,#89b8ff 48%,rgba(137,184,255,0) 70%)}
+.orb-d{width:420px;height:420px;top:56%;left:-160px;background:radial-gradient(circle at 50% 50%,#e0ecff,#9ec6ff 52%,rgba(158,198,255,0) 72%)}
+.wrap{position:relative;z-index:1;max-width:var(--container-max);margin:0 auto;padding:var(--space-12) var(--container-gutter-desktop) 96px}
+.glass{background:var(--surface);backdrop-filter:blur(26px) saturate(170%);-webkit-backdrop-filter:blur(26px) saturate(170%);border:1px solid var(--border);border-radius:var(--radius-lg);box-shadow:var(--elev-raised)}
+.masthead{padding:var(--space-12) var(--space-12) var(--space-8);margin-bottom:var(--space-6)}
+.eyebrow{display:inline-flex;align-items:center;gap:var(--space-2);background:rgba(245,158,11,.16);border:1px solid rgba(245,158,11,.3);border-radius:var(--radius-pill);padding:var(--space-2) var(--space-4);font-size:var(--text-xs);font-weight:700;color:#8a5a06;margin-bottom:var(--space-6)}
+.eyebrow::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--warn);box-shadow:0 0 0 4px rgba(245,158,11,.22)}
+.masthead h1{font-family:var(--font-display);font-size:var(--text-4xl);font-weight:800;line-height:var(--leading-tight);letter-spacing:var(--tracking-display);margin:0 0 var(--space-4)}
+.masthead .range{font-size:var(--text-lg);color:var(--fg-2);margin:0}
+.masthead .range b{color:var(--fg);font-weight:600}
+.lead{padding:var(--space-12);margin-bottom:var(--space-6);display:grid;grid-template-columns:280px 1fr;gap:var(--space-12);align-items:center;background:rgba(255,247,235,.82);border-color:rgba(245,158,11,.34)}
+.bignum{font-size:104px;font-weight:800;line-height:.9;letter-spacing:var(--tracking-display);color:#d97706}
+.bignum small{display:block;font-size:var(--text-sm);font-weight:600;line-height:1.4;letter-spacing:0;color:var(--fg-2);margin-top:var(--space-4)}
+.lead h2{font-size:var(--text-xl);font-weight:700;line-height:1.3;letter-spacing:-.01em;margin:0 0 var(--space-4)}
+.lead p{margin:0 0 var(--space-3);color:var(--fg-2);max-width:64ch}
+.lead p:last-child{margin-bottom:0}
+.lead b{color:var(--fg);font-weight:600}
+.scoreboard{display:grid;grid-template-columns:repeat(4,1fr);gap:var(--space-4);margin-bottom:var(--space-6)}
+.stat{padding:var(--space-8);border-radius:var(--radius-md)}
+.stat .label{font-size:var(--text-xs);font-weight:600;color:var(--muted);margin:0 0 var(--space-3)}
+.stat .value{font-size:var(--text-2xl);font-weight:800;line-height:1;letter-spacing:var(--tracking-display);margin:0}
+.stat .delta{font-size:var(--text-sm);color:var(--muted);margin:var(--space-3) 0 0}
+.pill{display:inline-block;border-radius:var(--radius-pill);padding:2px var(--space-3);font-size:var(--text-xs);font-weight:700;margin-right:6px}
+.pill-up{background:rgba(34,197,94,.15);color:#15803d}
+.pill-down{background:rgba(239,68,68,.14);color:#b91c1c}
+.pill-flat{background:rgba(79,140,255,.14);color:var(--accent)}
+.panel{padding:var(--space-12);margin-bottom:var(--space-6)}
+h3{font-size:var(--text-xl);font-weight:700;letter-spacing:-.015em;margin:0 0 var(--space-2)}
+.subhead{font-size:var(--text-sm);color:var(--muted);margin:0 0 var(--space-8);max-width:74ch}
+.chart{display:flex;align-items:flex-end;gap:var(--space-3);height:220px}
+.day{flex:1;display:flex;align-items:flex-end;gap:5px;height:100%}
+.bar-v{flex:1.5;background:linear-gradient(180deg,#7fb0ff,var(--accent));border-radius:10px 10px 4px 4px;box-shadow:0 8px 24px rgba(79,140,255,.28);min-height:3px}
+.bar-u{flex:1;background:rgba(16,32,51,.72);border-radius:10px 10px 4px 4px;min-height:3px}
+.dead .bar-v{background:linear-gradient(180deg,#fca5a5,#ef4444);box-shadow:none}
+.dead .bar-u{background:rgba(185,28,28,.45)}
+.axis{display:flex;gap:var(--space-3);margin-top:var(--space-4);padding-top:var(--space-4);border-top:1px solid var(--border-soft)}
+.axis div{flex:1;text-align:center;font-size:var(--text-xs);color:var(--muted)}
+.axis div b{display:block;font-size:var(--text-base);font-weight:700;color:var(--fg);letter-spacing:-.02em}
+.axis div u{display:block;text-decoration:none;font-size:10px;color:var(--muted);margin-top:2px}
+.axis div i{display:block;font-style:normal;font-size:10px;font-weight:700;color:#b91c1c;margin-top:2px}
+.legend{display:flex;flex-wrap:wrap;gap:var(--space-6);margin:var(--space-6) 0 0;font-size:var(--text-sm);color:var(--muted)}
+.legend i{display:inline-block;width:12px;height:12px;border-radius:4px;margin-right:var(--space-2);vertical-align:-1px;font-style:normal}
+.sw-v{background:var(--accent)}
+.sw-u{background:rgba(16,32,51,.72)}
+.sw-dead{background:#ef4444}
+.timeline{display:grid;gap:var(--space-3);margin-top:var(--space-4)}
+.tl{background:var(--surface-warm);border:1px solid var(--border-soft);border-radius:var(--radius-md);padding:var(--space-5) var(--space-6);display:grid;grid-template-columns:150px 1fr;gap:var(--space-5);align-items:start}
+.tl.bad{background:rgba(239,68,68,.09);border-color:rgba(239,68,68,.24)}
+.tl .when{font-size:var(--text-sm);font-weight:700;color:var(--fg)}
+.tl .when span{display:block;font-weight:500;font-size:var(--text-xs);color:var(--muted);margin-top:2px}
+.tl .what{font-size:var(--text-sm);color:var(--fg-2)}
+.tl .what b{color:var(--fg)}
+.tl code{font-family:var(--font-mono);font-size:12px;background:rgba(16,32,51,.07);border-radius:6px;padding:1px 6px;word-break:break-all}
+.diagrid{display:grid;grid-template-columns:repeat(2,1fr);gap:var(--space-3);margin-top:var(--space-6)}
+.dia{background:var(--surface-warm);border:1px solid var(--border-soft);border-radius:var(--radius-sm);padding:var(--space-5)}
+.dia .k{font-size:var(--text-xs);font-weight:600;color:var(--muted);margin:0 0 var(--space-2)}
+.dia .v{font-size:var(--text-base);font-weight:700;margin:0;word-break:break-all}
+.dia .v.ok{color:#15803d}
+.dia .v.bad{color:#b91c1c}
+.dia code{font-family:var(--font-mono);font-size:13px}
+table{width:100%;border-collapse:collapse;font-size:var(--text-sm)}
+th{text-align:left;font-size:var(--text-xs);font-weight:600;color:var(--muted);padding:0 var(--space-3) var(--space-3) 0;border-bottom:1px solid var(--border-soft)}
+th.num{text-align:right;padding-right:0}
+td{padding:var(--space-2) var(--space-3) var(--space-2) 0;vertical-align:middle}
+td.num{text-align:right;font-weight:700;padding-right:0;white-space:nowrap;font-variant-numeric:tabular-nums;font-size:var(--text-base)}
+.meter{position:relative}
+.meter .fill{position:absolute;left:0;top:3px;bottom:3px;background:rgba(79,140,255,.15);border:1px solid var(--border-soft);border-radius:var(--radius-sm);z-index:0}
+.meter .txt{position:relative;z-index:1;display:block;padding:var(--space-3) var(--space-4);color:var(--fg-2)}
+.hl .fill{background:rgba(79,140,255,.34)}
+.hl .txt{font-weight:700;color:var(--fg)}
+.tag{display:inline-block;border-radius:var(--radius-pill);font-size:11px;font-weight:700;padding:2px 9px;margin-left:var(--space-2);vertical-align:1px;white-space:nowrap}
+.tag-page{background:var(--accent);color:var(--accent-on)}
+.tag-post{background:rgba(255,255,255,.8);color:var(--accent);border:1px solid var(--border)}
+.mv{font-size:var(--text-xs);font-weight:700;margin-left:var(--space-2)}
+.mv-up{color:#15803d}
+.mv-down{color:#b91c1c}
+.mv-flat{color:var(--muted)}
+.split{display:grid;grid-template-columns:1fr 1fr;gap:var(--space-6);margin-bottom:var(--space-6)}
+.split .panel{margin-bottom:0}
+.device-bar{display:flex;gap:var(--space-2);height:52px;margin:var(--space-2) 0 var(--space-5)}
+.device-bar div{display:flex;align-items:center;padding-left:var(--space-4);font-size:var(--text-sm);font-weight:700;border-radius:var(--radius-sm);overflow:hidden;white-space:nowrap}
+.dev-desk{background:linear-gradient(135deg,#7fb0ff,var(--accent));color:var(--accent-on);box-shadow:0 10px 28px rgba(79,140,255,.3)}
+.dev-mob{background:var(--surface-warm);border:1px solid var(--border);color:var(--fg)}
+.dev-tab{background:rgba(16,32,51,.1);border:1px solid var(--border-soft);padding-left:4px!important}
+.dev-rows{display:grid;gap:var(--space-2);font-size:var(--text-sm)}
+.dev-rows div{display:flex;justify-content:space-between;gap:var(--space-4);padding:var(--space-2) 0;border-bottom:1px solid var(--border-soft)}
+.dev-rows div:last-child{border-bottom:none}
+.dev-rows span{color:var(--fg-2)}
+.dev-rows b{font-variant-numeric:tabular-nums}
+.read p{max-width:74ch;margin:0 0 var(--space-4);color:var(--fg-2)}
+.read p:last-child{margin-bottom:0}
+.read strong{color:var(--fg);font-weight:700}
+.callout{background:rgba(79,140,255,.12);border:1px solid var(--border);border-left:4px solid var(--accent);border-radius:var(--radius-md);padding:var(--space-6);margin:var(--space-6) 0;max-width:74ch}
+.callout p{margin:0;color:var(--fg)}
+.callout.good{background:rgba(34,197,94,.12);border-left-color:var(--success)}
+.callout.warn{background:rgba(245,158,11,.16);border-left-color:var(--warn)}
+.callout.bad{background:rgba(239,68,68,.12);border-left-color:var(--danger)}
+.actions{margin:0;padding:0;list-style:none;display:grid;gap:var(--space-4);counter-reset:a}
+.actions li{background:var(--surface-warm);border:1px solid var(--border-soft);border-radius:var(--radius-md);padding:var(--space-6) var(--space-6) var(--space-6) 74px;position:relative}
+.actions li.urgent{background:rgba(239,68,68,.09);border-color:rgba(239,68,68,.26)}
+.actions li.urgent::before{background:var(--danger);box-shadow:0 8px 20px rgba(239,68,68,.34)}
+.actions li::before{counter-increment:a;content:counter(a);position:absolute;left:var(--space-6);top:var(--space-6);width:34px;height:34px;border-radius:var(--radius-pill);background:var(--accent);color:var(--accent-on);font-size:var(--text-sm);font-weight:700;display:flex;align-items:center;justify-content:center;box-shadow:0 8px 20px rgba(79,140,255,.34)}
+.actions b{display:block;font-size:var(--text-base);font-weight:700;margin-bottom:var(--space-1)}
+.actions span{color:var(--muted);font-size:var(--text-sm)}
+.actions code{font-family:var(--font-mono);font-size:12.5px;background:rgba(16,32,51,.07);border-radius:6px;padding:1px 6px}
+.footer{padding:var(--space-12)}
+.footer .sig{font-size:var(--text-2xl);font-weight:800;letter-spacing:var(--tracking-display);color:var(--accent);margin:0 0 var(--space-5)}
+.footer p{margin:0 0 var(--space-2);color:var(--fg-2);font-size:var(--text-sm)}
+.footer .note{color:var(--muted);font-size:var(--text-xs);max-width:88ch;margin-top:var(--space-4)}
+.progress{position:fixed;top:0;left:0;height:3px;width:0;z-index:99;background:linear-gradient(90deg,#fbbf24,#f59e0b);box-shadow:0 0 14px rgba(245,158,11,.55);transition:width 90ms linear}
+html.js-anim .reveal{opacity:0;transform:translateY(22px) scale(.995);transition:opacity 720ms var(--ease-standard), transform 720ms var(--ease-standard);will-change:opacity,transform}
+html.js-anim .reveal.in{opacity:1;transform:none}
+html.js-anim .bar-v,html.js-anim .bar-u{transition:height 900ms var(--ease-standard)}
+html.js-anim .meter .fill,html.js-anim .device-bar div{transition:width 1000ms var(--ease-standard)}
+html.js-anim .orb{transition:transform 120ms linear}
+@media (max-width:960px){
+  .wrap{padding:var(--space-8) var(--container-gutter-tablet) var(--section-y-tablet)}
+  .masthead h1{font-size:var(--text-3xl)}
+  .lead{grid-template-columns:1fr;gap:var(--space-6)}
+  .bignum{font-size:var(--text-3xl)}
+  .scoreboard{grid-template-columns:1fr 1fr}
+  .split{grid-template-columns:1fr}
+  .tl{grid-template-columns:1fr;gap:var(--space-2)}
+  .masthead,.lead,.panel,.footer{padding:var(--space-8)}
+}
+@media (max-width:620px){
+  .wrap{padding:var(--space-6) var(--container-gutter-phone) var(--section-y-phone)}
+  .masthead h1{font-size:var(--text-2xl)}
+  .scoreboard{grid-template-columns:1fr}
+  .diagrid{grid-template-columns:1fr}
+  .chart{height:150px;gap:4px}
+  .axis{gap:4px}
+  .axis div{font-size:10px}
+  .axis div b{font-size:var(--text-sm)}
+  .actions li{padding-left:var(--space-6);padding-top:64px}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+@media print{
+  body{background:#fff}
+  .field,.progress{display:none}
+  html.js-anim .reveal{opacity:1!important;transform:none!important}
+  .glass{background:#fff;backdrop-filter:none;-webkit-backdrop-filter:none;box-shadow:none;border:1px solid #cdd9ea}
+  .lead{background:#fff8ed}
+  .panel,.masthead,.lead,.footer{page-break-inside:avoid}
+}
+</style>
+</head>
+<body>
+
+<div class="field" aria-hidden="true">
+  <div class="orb orb-a"></div><div class="orb orb-b"></div>
+  <div class="orb orb-c"></div><div class="orb orb-d"></div>
+</div>
+
+<div class="wrap">
+
+  <header class="glass masthead">
+    <div class="eyebrow">Site outage — action required</div>
+    <h1>Traffic Report</h1>
+    <p class="range">November 3–9, 2026 &nbsp;·&nbsp; Source <b>Jetpack Stats</b> &nbsp;·&nbsp; teamintegrityknowledgecenter.com</p>
+  </header>
+
+  <div class="glass lead">
+    <div class="bignum">12<small>days your domain has been unreachable — and it is still down today</small></div>
+    <div>
+      <h2>This is not a traffic decline. Your website address stopped pointing at your website on November 4, and nobody has been able to reach it since.</h2>
+      <p>Traffic ran 57 and 42 views on November 3 and 4. From November 5 it has been <b>2, 2, 2, 0 and 2</b> — and it has stayed in that range every day since, through <b>November 16</b>. Seventeen views in twelve days.</p>
+      <p>The site itself is fine. All 280 posts are intact, backups are running, nothing was deleted. The problem is that <b>teamintegrityknowledgecenter.com no longer resolves to it</b>. Every link in Google, Bing, your newsletter, Facebook and LinkedIn now points at an address that does not load.</p>
+    </div>
+  </div>
+
+  <div class="scoreboard">
+    <div class="glass stat">
+      <p class="label">Views</p>
+      <p class="value">107</p>
+      <p class="delta"><span class="pill pill-down">▼ 53%</span>vs prior 7 days</p>
+    </div>
+    <div class="glass stat">
+      <p class="label">Visitors</p>
+      <p class="value">74</p>
+      <p class="delta"><span class="pill pill-down">▼ 54%</span>vs prior 7 days</p>
+    </div>
+    <div class="glass stat">
+      <p class="label">Views after Nov 4</p>
+      <p class="value">8</p>
+      <p class="delta">Across five days — 1.6 a day</p>
+    </div>
+    <div class="glass stat">
+      <p class="label">Still down</p>
+      <p class="value">Yes</p>
+      <p class="delta">Verified today, November 16</p>
+    </div>
+  </div>
+
+  <section class="glass panel">
+    <h3>Daily traffic</h3>
+    <p class="subhead">Two normal days, then a cliff. November 8 recorded zero views — the first zero-view day in this entire reporting series. Of the period's 107 views, 99 came from the first two days.</p>
+
+    <div class="chart">
+      <div class="day"><div class="bar-v" style="height:100%"></div><div class="bar-u" style="height:59.6%"></div></div>
+      <div class="day"><div class="bar-v" style="height:73.7%"></div><div class="bar-u" style="height:57.9%"></div></div>
+      <div class="day dead"><div class="bar-v" style="height:3.5%"></div><div class="bar-u" style="height:3.5%"></div></div>
+      <div class="day dead"><div class="bar-v" style="height:3.5%"></div><div class="bar-u" style="height:1.8%"></div></div>
+      <div class="day dead"><div class="bar-v" style="height:3.5%"></div><div class="bar-u" style="height:3.5%"></div></div>
+      <div class="day dead"><div class="bar-v" style="height:1%"></div><div class="bar-u" style="height:1%"></div></div>
+      <div class="day dead"><div class="bar-v" style="height:3.5%"></div><div class="bar-u" style="height:3.5%"></div></div>
+    </div>
+    <div class="axis">
+      <div><b>57</b>Tue 3<u>normal</u></div>
+      <div><b>42</b>Wed 4<i>domain broke</i></div>
+      <div><b>2</b>Thu 5<u>5 posts</u></div>
+      <div><b>2</b>Fri 6</div>
+      <div><b>2</b>Sat 7</div>
+      <div><b>0</b>Sun 8<i>zero</i></div>
+      <div><b>2</b>Mon 9</div>
+    </div>
+    <p class="legend">
+      <span><i class="sw-v"></i>Views</span>
+      <span><i class="sw-u"></i>Visitors</span>
+      <span><i class="sw-dead"></i>Days the domain was broken</span>
+      <span>The same pattern continues through November 16</span>
+    </p>
+  </section>
+
+  <section class="glass panel">
+    <h3>What the records show</h3>
+    <p class="subhead">Pulled directly from the site's WordPress.com account records, backup logs and activity log — not from the stats screenshots.</p>
+
+    <div class="timeline">
+      <div class="tl">
+        <div class="when">Nov 3, 9:46 AM<span>Backup log</span></div>
+        <div class="what">Site address recorded as <code>teamintegrityknowledgecenter.com</code>. Everything normal. 57 views that day.</div>
+      </div>
+      <div class="tl">
+        <div class="when">Nov 4, 8:58 AM<span>Backup log</span></div>
+        <div class="what">Still recorded as <code>teamintegrityknowledgecenter.com</code>. 42 views that day.</div>
+      </div>
+      <div class="tl bad">
+        <div class="when">Nov 4, 10:36 PM<span>Backup log</span></div>
+        <div class="what"><b>Site address now recorded as</b> <code>teamintegrityllc-kicvz.wpcomstaging.com</code>. The change happened between these two backups. Every backup since has recorded the staging address.</div>
+      </div>
+      <div class="tl bad">
+        <div class="when">Nov 5 onward<span>Jetpack Stats</span></div>
+        <div class="what">Traffic collapses to 2, 2, 2, 0, 2 and has not recovered. Internal links in the activity log now resolve to the staging address.</div>
+      </div>
+      <div class="tl bad">
+        <div class="when">Nov 16, today<span>Account records</span></div>
+        <div class="what">Still broken. Primary site address is the staging URL. The custom domain shows status <b>"Pending setup — connection error"</b> and its DNS does not point to WordPress.com.</div>
+      </div>
+    </div>
+
+    <div class="diagrid">
+      <div class="dia"><p class="k">Primary site address right now</p><p class="v bad"><code>teamintegrityllc-kicvz.wpcomstaging.com</code></p></div>
+      <div class="dia"><p class="k">teamintegrityknowledgecenter.com status</p><p class="v bad">Pending setup — connection error</p></div>
+      <div class="dia"><p class="k">Does the domain point to WordPress.com?</p><p class="v bad">No</p></div>
+      <div class="dia"><p class="k">SSL certificate</p><p class="v bad">Pending — cannot issue until DNS is fixed</p></div>
+      <div class="dia"><p class="k">Domain paid until</p><p class="v ok">May 9, 2028 — not expired</p></div>
+      <div class="dia"><p class="k">Your content</p><p class="v ok">280 posts intact, backups running daily</p></div>
+    </div>
+  </section>
+
+  <section class="glass panel read">
+    <h3>The read</h3>
+
+    <div class="callout bad">
+      <p><strong>Good news first: nothing has been lost.</strong> All 280 posts, 15 pages, your media library and your plugins are intact, and Jetpack has completed a successful full backup every single day through the outage. The domain is paid up until May 2028. This is a configuration problem, not a data loss, and it is fixable.</p>
+    </div>
+
+    <p><strong>What appears to have happened.</strong> On the evening of November 4, the site's address switched from your custom domain to its WordPress.com staging address. The domain itself is still attached to the account, but its status is "connection error" and its DNS records no longer point at WordPress.com — so a visitor typing teamintegrityknowledgecenter.com, or clicking a Google result, does not reach your site. The site is running perfectly at an address that nobody knows.</p>
+
+    <p><strong>The 1-to-2 views a day are almost certainly your own team.</strong> Whoever has the staging URL open in a tab. That is the only route into the site that still works, which is why the number is so precisely small and so consistent.</p>
+
+    <p><strong>Search traffic fell 68% and will keep falling.</strong> Search went from roughly 59 to 19 views, and almost all of those 19 came on November 3 and 4 before the break. Google and Bing are now crawling URLs that do not respond. If this runs much longer, those pages start dropping out of the index — and getting re-indexed afterwards takes considerably longer than the outage itself. That is the part that compounds.</p>
+
+    <p><strong>Five posts were published on November 5, into a site nobody could reach.</strong> Everything published since November 4 has had no audience at all. Anything scheduled this week will land the same way until the domain is fixed.</p>
+
+    <p><strong>Your newsletter links are broken too.</strong> Every link in The Briefing and every Long Read send points at teamintegrityknowledgecenter.com. Any email that went out after November 4 drove subscribers to a page that does not load. Worth checking what has sent since, because that affects deliverability as well as traffic.</p>
+
+    <div class="callout warn">
+      <p><strong>Roughly 400 views lost so far, and that is the small cost.</strong> At the site's recent baseline of about 32 views a day, twelve days of outage is somewhere near 400 views that did not happen. The larger cost is search ranking and the impression left on anyone who clicked a link and found nothing — including anyone who arrived from a newsletter, a Facebook post, or a business card.</p>
+    </div>
+
+    <p><strong>The domain is also not set to auto-renew.</strong> It is paid through May 2028 so there is no urgency, but while someone is in the domain settings fixing this, turning auto-renew on costs nothing and removes a future version of this exact problem.</p>
+
+    <p><strong>773 subscribers, ninth consecutive report.</strong> Unchanged again — though for once that is not the headline.</p>
+  </section>
+
+  <section class="glass panel">
+    <h3>What to do next</h3>
+    <p class="subhead">The first item is the only one that matters this week.</p>
+    <ol class="actions">
+      <li class="urgent"><b>Confirm it yourself — ten seconds</b><span>Open teamintegrityknowledgecenter.com in a private browser window on your phone. If it does not load your site, this report is right and item two is the fix. Do this before anything else, because everything below depends on it.</span></li>
+      <li class="urgent"><b>Point the domain's DNS back at WordPress.com</b><span>This is a registrar-level change and needs whoever controls the domain account — Hamza handles this kind of configuration. The root domain's A records need to be set to <code>192.0.78.171</code> and <code>192.0.78.242</code>. Once DNS propagates, the SSL certificate issues automatically. Then set teamintegrityknowledgecenter.com back as the site's primary address in WordPress.com → Settings → Domains.</span></li>
+      <li class="urgent"><b>Pause publishing and all newsletter sends until it is back</b><span>Five posts went out on November 5 to nobody. Every send and every post between now and the fix is wasted effort, and newsletter links pointing at a dead domain hurt your sender reputation on top of it.</span></li>
+      <li><b>Once it is live, resubmit the sitemap to Google and Bing</b><span>Both have been crawling broken URLs for nearly two weeks. Resubmitting <code>teamintegrityknowledgecenter.com/post-sitemap.xml</code> in Search Console and Bing Webmaster Tools tells them to re-crawl immediately rather than waiting for the next natural pass.</span></li>
+      <li><b>Turn on Jetpack Monitor</b><span>Your plan already includes downtime alerts. Had Monitor been active, you would have had an email within minutes of November 4 instead of finding out twelve days later from a traffic report. This takes one click.</span></li>
+      <li><b>Turn on domain auto-renew while you are in there</b><span>Paid through May 2028, so not urgent — but it is currently off, and a lapsed domain produces exactly this outage with a harder recovery.</span></li>
+    </ol>
+  </section>
+
+  <div class="split">
+    <section class="glass panel">
+      <h3>Most viewed</h3>
+      <p class="subhead">Ten pages, 69 views. Read these as a record of November 3–4 only — there was almost no traffic afterwards.</p>
+      <table>
+        <thead><tr><th>Page</th><th class="num">Views</th></tr></thead>
+        <tbody>
+          <tr class="hl"><td class="meter"><span class="fill" style="width:100%"></span><span class="txt">Government Contracting Consulting, Certifications &amp; Proposal Services<span class="tag tag-page">Service</span><span class="mv mv-down">▼ 22%</span></span></td><td class="num">25</td></tr>
+          <tr><td class="meter"><span class="fill" style="width:44%"></span><span class="txt">Discovery Call<span class="tag tag-page">Conversion</span><span class="mv mv-down">▼ 50%</span></span></td><td class="num">11</td></tr>
+          <tr><td class="meter"><span class="fill" style="width:28%"></span><span class="txt">Government Contracting News &amp; Insights<span class="tag tag-page">Blog hub</span><span class="mv mv-down">▼ 42%</span></span></td><td class="num">7</td></tr>
+          <tr><td class="meter"><span class="fill" style="width:24%"></span><span class="txt">The Biggest Veteran-Care Reorganization in 3 Decades<span class="tag tag-post">Article</span><span class="mv mv-up">▲ 50%</span></span></td><td class="num">6</td></tr>
+          <tr><td class="meter"><span class="fill" style="width:20%"></span><span class="txt">When the Auditor Asks: Your Duty to Give the Records<span class="tag tag-post">Article</span></span></td><td class="num">5</td></tr>
+          <tr><td class="meter"><span class="fill" style="width:16%"></span><span class="txt">GovCon Store<span class="tag tag-page">Commerce</span><span class="mv mv-down">▼ 20%</span></span></td><td class="num">4</td></tr>
+          <tr><td class="meter"><span class="fill" style="width:12%"></span><span class="txt">Certifications<span class="tag tag-page">Service</span><span class="mv mv-flat">= 0%</span></span></td><td class="num">3</td></tr>
+          <tr><td class="meter"><span class="fill" style="width:12%"></span><span class="txt">The Free Hours Problem: Uncompensated Overtime<span class="tag tag-post">Article</span></span></td><td class="num">3</td></tr>
+          <tr><td class="meter"><span class="fill" style="width:12%"></span><span class="txt">BREAKING: In 2026, GovCon Enforcement Got Personal<span class="tag tag-post">Article</span></span></td><td class="num">3</td></tr>
+          <tr><td class="meter"><span class="fill" style="width:8%"></span><span class="txt">Contact<span class="tag tag-page">Page</span><span class="mv mv-down">▼ 33%</span></span></td><td class="num">2</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="glass panel">
+      <h3>Where they came from</h3>
+      <p class="subhead">47 views carried a referrer; 60 arrived direct or untracked.</p>
+      <table>
+        <thead><tr><th>Referrer</th><th class="num">Views</th></tr></thead>
+        <tbody>
+          <tr class="hl"><td class="meter"><span class="fill" style="width:100%"></span><span class="txt">Search engines<span class="mv mv-down">▼ 68%</span></span></td><td class="num">19</td></tr>
+          <tr><td class="meter"><span class="fill" style="width:63.2%"></span><span class="txt">Facebook<span class="mv mv-down">▼ was 38</span></span></td><td class="num">12</td></tr>
+          <tr><td class="meter"><span class="fill" style="width:36.8%"></span><span class="txt">Unidentified app link (UUID referrer)<span class="tag tag-post">New</span></span></td><td class="num">7</td></tr>
+          <tr><td class="meter"><span class="fill" style="width:36.8%"></span><span class="txt">Instagram<span class="mv mv-up">▲ was 2</span></span></td><td class="num">7</td></tr>
+          <tr><td class="meter"><span class="fill" style="width:8%"></span><span class="txt">Gmail</span></td><td class="num">1</td></tr>
+          <tr><td class="meter"><span class="fill" style="width:8%"></span><span class="txt">safe.menlosecurity.com<span class="mv mv-flat">= 0%</span></span></td><td class="num">1</td></tr>
+        </tbody>
+      </table>
+      <p class="subhead" style="margin:var(--space-6) 0 0">LinkedIn does not appear at all this period, after six views in each of the last two. The 7-view referrer is a bare UUID rather than a domain — most likely a GoHighLevel funnel or an in-app browser. Worth identifying once the site is back, since it is the third-largest source here.</p>
+
+      <h3 style="margin-top:var(--space-8)">Devices</h3>
+      <div class="device-bar">
+        <div class="dev-desk" style="width:86%">Desktop 86%</div>
+        <div class="dev-mob" style="width:13.1%">Mobile 13%</div>
+        <div class="dev-tab" style="width:0.9%"></div>
+      </div>
+      <div class="dev-rows">
+        <div><span>Desktop</span><b>86.0% <span class="mv mv-up">▲ 5%</span></b></div>
+        <div><span>Mobile</span><b>13.1% <span class="mv mv-down">▼ 25%</span></b></div>
+        <div><span>Tablet</span><b>0.9% <span class="mv mv-up">▲ 125%</span></b></div>
+      </div>
+    </section>
+  </div>
+
+  <footer class="glass footer">
+    <p class="sig">Brick by brick.</p>
+    <p>Prepared for Melanie Patterson, Founder &amp; CEO, Team Integrity Knowledge Center.</p>
+    <p class="note">Traffic figures from Jetpack Stats for teamintegrityknowledgecenter.com, November 3–9, 2026; all seven daily values are exact and sum to the reported totals of 107 views and 74 visitors. Daily figures through November 16, the site's current address and visibility, the custom domain's status and DNS state, and the backup and activity logs were read directly from the site's WordPress.com account records on November 16, 2026, and are the basis for the outage finding — not the stats screenshots. The timing of the address change is established by comparing the recorded site address in consecutive daily backup logs on November 3 and 4. Top pages, referrers and device figures come from the supplied screenshots and their percentage changes are Jetpack's own against the prior seven days; because 99 of the period's 107 views fell on November 3 and 4, those tables describe two days rather than seven. The estimate of roughly 400 lost views applies the site's recent baseline of about 32 views per day to the twelve days from November 5 to November 16. Post, page and backup counts are from the November 7 backup record. Confirm the outage by opening the domain in a private browser window before acting on this report.</p>
+  </footer>
+
+</div>
+
+<div class="progress" id="progress" aria-hidden="true"></div>
+
+<script>
+(function () {
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var progress = document.getElementById('progress');
+
+  function trackProgress() {
+    var h = document.documentElement.scrollHeight - window.innerHeight;
+    var pct = h > 0 ? (window.scrollY / h) * 100 : 0;
+    progress.style.width = Math.min(100, Math.max(0, pct)) + '%';
+  }
+
+  if (reduce || !('IntersectionObserver' in window)) {
+    window.addEventListener('scroll', trackProgress, { passive: true });
+    trackProgress();
+    return;
+  }
+
+  document.documentElement.classList.add('js-anim');
+
+  var panels = document.querySelectorAll('.masthead, .lead, .stat, .panel, .footer');
+  Array.prototype.forEach.call(panels, function (el) { el.classList.add('reveal'); });
+
+  function collapse(selector, prop) {
+    Array.prototype.forEach.call(document.querySelectorAll(selector), function (el) {
+      var value = el.style[prop];
+      if (!value) return;
+      el.dataset.grow = value;
+      el.dataset.prop = prop;
+      el.style[prop] = '0';
+    });
+  }
+  collapse('.bar-v, .bar-u', 'height');
+  collapse('.meter .fill, .device-bar div', 'width');
+
+  function grow(scope) {
+    var bars = scope.querySelectorAll('[data-grow]');
+    Array.prototype.forEach.call(bars, function (el, i) {
+      setTimeout(function () { el.style[el.dataset.prop] = el.dataset.grow; }, 90 + i * 45);
+    });
+  }
+
+  var observer = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+      if (!entry.isIntersecting) return;
+      entry.target.classList.add('in');
+      grow(entry.target);
+      observer.unobserve(entry.target);
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+
+  Array.prototype.forEach.call(panels, function (el) { observer.observe(el); });
+
+  var orbs = [
+    { el: document.querySelector('.orb-a'), rate: 0.10 },
+    { el: document.querySelector('.orb-b'), rate: -0.07 },
+    { el: document.querySelector('.orb-c'), rate: 0.14 },
+    { el: document.querySelector('.orb-d'), rate: -0.05 }
+  ];
+
+  var ticking = false;
+  function onScroll() {
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(function () {
+      var y = window.scrollY;
+      orbs.forEach(function (o) { if (o.el) o.el.style.transform = 'translate3d(0,' + (y * o.rate) + 'px,0)'; });
+      trackProgress();
+      ticking = false;
+    });
+  }
+
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', trackProgress, { passive: true });
+  trackProgress();
+})();
+</script>
+</body>
+</html>
